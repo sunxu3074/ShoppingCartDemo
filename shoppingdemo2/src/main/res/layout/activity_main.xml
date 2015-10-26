@@ -4,22 +4,22 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              >
+              tools:context=".MainActivity">
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/activity_category_tablayout"
+        android:id="@+id/main_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="fill"
-        app:tabIndicatorColor="#ff23641e"
-        app:tabIndicatorHeight="1dp"
+        app:tabIndicatorColor="#ff20e6fd"
+        app:tabIndicatorHeight="0.5dp"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="#ff23641e"
         app:tabTextColor="#000000"
         />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/activity_category_viewpager"
+        android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

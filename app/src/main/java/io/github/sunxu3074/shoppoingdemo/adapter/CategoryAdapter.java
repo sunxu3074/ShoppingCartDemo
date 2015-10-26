@@ -1,7 +1,6 @@
 package io.github.sunxu3074.shoppoingdemo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,26 +53,22 @@ public class CategoryAdapter extends BaseAdapter {
             viewHolder.more = (TextView) convertView.findViewById(R.id.item_category_more);
             viewHolder.details = (TextView) convertView.findViewById(R.id.item_category_details);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.item_category_img);
+            viewHolder.number = (TextView) convertView.findViewById(R.id.item_category_number);
+            viewHolder.price = (TextView) convertView.findViewById(R.id.item_category_price);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         CategoryEntity entity = (CategoryEntity) getItem(position);
         viewHolder.label.setText(entity.getName());
-        viewHolder.more.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                //TODO
-                mContext.startActivity(new Intent());
-            }
-        });
         viewHolder.details.setText(entity.getDetails());
         viewHolder.image.setImageResource(R.drawable.category);
+        viewHolder.number.setText("已售出"+entity.getNumber()+"件");
+        viewHolder.price.setText("￥"+entity.getPrice());
         return convertView;
     }
    static class ViewHolder{
-        TextView label,more,details;
+        TextView label,more,details,number,price;
         ImageView image;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.sunxu3074.shoppoingdemo" >
+    package="io.github.sunxu3074.shoppingdemo2" >
 
     <application
         android:allowBackup="true"
@@ -8,18 +8,13 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".activity.AllActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.CategoryDetailsActivity"
-            android:label="@string/title_activity_category_details" >
         </activity>
     </application>
 
