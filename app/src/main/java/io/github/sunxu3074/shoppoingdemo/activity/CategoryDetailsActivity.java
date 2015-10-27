@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
@@ -21,8 +22,27 @@ public class CategoryDetailsActivity extends ActionBarActivity {
     private String[] mTitles = new String[]{"健康产品", "健康产品", "健康产品", "健康产品", "健康产品", "健康产品",
             "健康产品", "健康产品",};
 
-    /**记录当前的position*/
+    /**
+     * 记录当前的position
+     */
     private int currentPosition;
+
+//    private static final ArrayList<HealthyDetailsFragment> fragments = new ArrayList<>();
+//    private static final HealthyDetailsFragment fragment = new HealthyDetailsFragment();
+//
+//    static {
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//        fragments.add(fragment);
+//    }
+
+//    private Object[] fragments = new Object[]{fragment,fragment,fragment,fragment,fragment,
+// fragment,fragment,fragment,};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +76,13 @@ public class CategoryDetailsActivity extends ActionBarActivity {
 
     private void initDatas() {
 
-       currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION,-1);
+        currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION, -1);
 
         //TabLayout.TabLayoutOnPageChangeListener 中记录了tab被点击怎么goto的方法..
         mTabLayout.getTabAt(currentPosition).select();
 
 
     }
-
-
 
 
     private void initViews() {
@@ -75,7 +93,9 @@ public class CategoryDetailsActivity extends ActionBarActivity {
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
+                Toast.makeText(getApplication(), "i=" + i, Toast.LENGTH_LONG).show();
                 return new HealthyDetailsFragment();
+
             }
 
             @Override

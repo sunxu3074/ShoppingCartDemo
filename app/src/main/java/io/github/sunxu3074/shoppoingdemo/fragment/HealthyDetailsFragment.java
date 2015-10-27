@@ -1,5 +1,6 @@
 package io.github.sunxu3074.shoppoingdemo.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.HealthyEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.activity.ProductDetailsActivity;
 import io.github.sunxu3074.shoppoingdemo.adapter.HealthyAdapter;
 
 /**
@@ -70,7 +72,11 @@ public class HealthyDetailsFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                HealthyAdapter adapter = (HealthyAdapter) parent.getAdapter();
+                HealthyEntity entity = (HealthyEntity) adapter.getItem(position);
+                Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
+                intent.putExtra("details", entity.getDetails());
+                getActivity().startActivity(intent);
             }
         });
     }
