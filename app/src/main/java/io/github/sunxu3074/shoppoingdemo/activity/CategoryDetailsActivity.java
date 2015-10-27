@@ -31,7 +31,27 @@ public class CategoryDetailsActivity extends ActionBarActivity {
 
         initViews();
         initDatas();
+        addListeners();
 
+    }
+
+    private void addListeners() {
+       /* mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });*/
     }
 
     private void initDatas() {
@@ -40,6 +60,8 @@ public class CategoryDetailsActivity extends ActionBarActivity {
 
         //TabLayout.TabLayoutOnPageChangeListener 中记录了tab被点击怎么goto的方法..
         mTabLayout.getTabAt(currentPosition).select();
+
+
     }
 
 
