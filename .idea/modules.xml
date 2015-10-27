@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ShoppingDemo.iml" filepath="$PROJECT_DIR$/ShoppingDemo.iml" />
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/shoppingdemo2/shoppingdemo2.iml" filepath="$PROJECT_DIR$/shoppingdemo2/shoppingdemo2.iml" />
+=======
+>>>>>>> Stashed changes
     </modules>
   </component>
 </project>
