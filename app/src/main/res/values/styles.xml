@@ -5,4 +5,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--  为Activity统一设置打开关闭动画 -->
+    <style name="activity_animation_style" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+
+    <style name="AnimationActivity" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_bottom_to_top</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_top_to_bottom</item>
+    </style>
 </resources>
