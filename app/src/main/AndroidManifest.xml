@@ -25,9 +25,9 @@
             android:label="@string/title_activity_product_details" >
         </activity>
         <activity
-            android:theme="@style/activity_animation_style"
             android:name=".activity.AddToCartActivity"
-            android:label="@string/title_activity_add_to_cart" >
+            android:label="@string/title_activity_add_to_cart"
+            >
         </activity>
     </application>
 

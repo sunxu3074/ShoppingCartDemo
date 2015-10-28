@@ -12,6 +12,14 @@
 
     <style name="AnimationActivity" parent="@android:style/Animation">
         <item name="android:activityOpenEnterAnimation">@anim/activity_bottom_to_top</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
         <item name="android:activityOpenExitAnimation">@anim/activity_top_to_bottom</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
     </style>
+
+    <style name="PopupWindowStyle" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/activity_bottom_to_top</item>
+        <item name="android:windowExitAnimation">@anim/activity_top_to_bottom</item>
+    </style>
+
 </resources>

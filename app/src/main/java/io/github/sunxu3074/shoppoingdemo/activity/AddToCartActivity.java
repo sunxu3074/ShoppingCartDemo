@@ -2,10 +2,8 @@ package io.github.sunxu3074.shoppoingdemo.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 
 import io.github.sunxu3074.shoppoingdemo.R;
 
@@ -14,17 +12,19 @@ public class AddToCartActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_to_cart);
+
 
 //        LayoutParams params = getWindow().getAttributes();
 //        params.width = LayoutParams.MATCH_PARENT;
 //        getWindow().setAttributes(params);
 
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = WindowManager.LayoutParams.MATCH_PARENT*2/3;
-        params.gravity = Gravity.BOTTOM;
-        getWindow().setAttributes(params);
+//        WindowManager.LayoutParams params = getWindow().getAttributes();
+//        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        params.height = WindowManager.LayoutParams.MATCH_PARENT * 1/2;
+//        params.gravity = Gravity.BOTTOM;
+//        getWindow().setAttributes(params);
+
+        setContentView(R.layout.activity_add_to_cart);
 
     }
 
