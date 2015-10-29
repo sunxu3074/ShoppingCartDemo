@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eaeaea"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_item_shopping_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:layout_marginLeft="17dp"
+            />
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/healthy_3"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_item_shopping_cart_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="健康产品系列产品1"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:layout_below="@+id/tv_item_shopping_cart_name"
+                android:id="@+id/tv_item_shopping_cart_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="种类:健康产品"
+                android:textColor="#ff606461"
+                android:layout_margin="10dp"
+                />
+
+            <TextView
+                android:layout_below="@+id/tv_item_shopping_cart_category"
+                android:id="@+id/tv_item_shopping_cart_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥2100"
+                android:textColor="#ffea3846"/>
+            <TextView
+                android:id="@+id/tv_item_shopping_cart_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="17dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignBaseline="@+id/tv_item_shopping_cart_price"
+                android:text="x1"
+                android:textColor="#000000"
+                android:typeface="serif"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eaeaea"/>
+
+</LinearLayout>

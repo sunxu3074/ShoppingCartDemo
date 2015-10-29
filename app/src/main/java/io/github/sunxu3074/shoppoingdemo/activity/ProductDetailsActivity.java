@@ -1,5 +1,7 @@
 package io.github.sunxu3074.shoppoingdemo.activity;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +20,8 @@ import android.widget.Toast;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.HealthyEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
+import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
 public class ProductDetailsActivity extends ActionBarActivity {
 
@@ -54,6 +58,8 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
     private Handler handler = new Handler();
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,13 +74,8 @@ public class ProductDetailsActivity extends ActionBarActivity {
         mBtnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//               Intent intent = new Intent(getApplication(), AddToCartActivity.class);
-//               startActivity(intent);
-//               overridePendingTransition(R.anim.activity_bottom_to_top, 0);
                 if (isPopOpened == false) {
                     setWindowBehind(true);
-                    final int x = getWindow().getAttributes().width;
-                    final int y = getWindow().getAttributes().height;
                     mPopupWindow.setAnimationStyle(R.style.PopupWindowStyle);
                     mPopupWindow.showAtLocation(mImgDetails, Gravity.BOTTOM, 0, 0);
                     isPopOpened = true;
@@ -89,6 +90,9 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
                 //TODO 发送请求到后台
                 // 保存产品信息到数据库
+
+                insert2Sqlite();
+
                 Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
 
                 if (isPopOpened == true) {
@@ -127,6 +131,36 @@ public class ProductDetailsActivity extends ActionBarActivity {
                 }
             }
         });
+
+    }
+
+    private void insert2Sqlite() {
+        // 购买数量
+        int number = Integer.parseInt(mTVNumber.getText().toString());
+        // 购买种类
+        // 购买价格
+        int price = entity.getPrice();
+        // 购买id
+        String id = entity.getId();
+        // 购买名称
+        String name = entity.getName();
+
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+//        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, id);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price+"");
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number+"");
+
+        long rawID = -1;
+
+        rawID = db.insert(
+                ProductReaderContract.ProductEntry.TABLE_NAME,
+                null,
+                values);
 
     }
 

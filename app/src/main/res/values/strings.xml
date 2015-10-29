@@ -6,4 +6,5 @@
     <string name="title_activity_category_details">CategoryDetailsActivity</string>
     <string name="title_activity_product_details">ProductDetailsActivity</string>
     <string name="title_activity_add_to_cart">AddToCartActivity</string>
+    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
 </resources>

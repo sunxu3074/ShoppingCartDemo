@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
@@ -93,9 +92,8 @@ public class CategoryDetailsActivity extends ActionBarActivity {
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
-                Toast.makeText(getApplication(), "i=" + i, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplication(), "i=" + i, Toast.LENGTH_LONG).show();
                 return new HealthyDetailsFragment();
-
             }
 
             @Override

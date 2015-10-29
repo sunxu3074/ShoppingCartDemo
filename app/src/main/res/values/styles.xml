@@ -22,4 +22,12 @@
         <item name="android:windowExitAnimation">@anim/activity_top_to_bottom</item>
     </style>
 
+    <!-- 为程序或者活动应用的主题样式 -->
+    <style name="CustomActionBarTheme"
+           parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+
+        <!-- 兼容支持库 -->
+        <item name="windowActionBarOverlay">true</item>
+    </style>
 </resources>

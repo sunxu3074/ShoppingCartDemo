@@ -22,7 +22,12 @@
         </activity>
         <activity
             android:name=".activity.ProductDetailsActivity"
-            android:label="@string/title_activity_product_details" >
+            android:label="@string/title_activity_product_details"
+            android:theme="@style/CustomActionBarTheme" >
+        </activity>
+        <activity
+            android:name=".activity.ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart" >
         </activity>
     </application>
 
