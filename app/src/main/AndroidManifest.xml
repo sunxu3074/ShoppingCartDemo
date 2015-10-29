@@ -24,11 +24,6 @@
             android:name=".activity.ProductDetailsActivity"
             android:label="@string/title_activity_product_details" >
         </activity>
-        <activity
-            android:name=".activity.AddToCartActivity"
-            android:label="@string/title_activity_add_to_cart"
-            >
-        </activity>
     </application>
 
 </manifest>

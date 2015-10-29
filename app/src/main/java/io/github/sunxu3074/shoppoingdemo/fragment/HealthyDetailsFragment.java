@@ -75,7 +75,7 @@ public class HealthyDetailsFragment extends Fragment {
                 HealthyAdapter adapter = (HealthyAdapter) parent.getAdapter();
                 HealthyEntity entity = (HealthyEntity) adapter.getItem(position);
                 Intent intent = new Intent(getActivity(), ProductDetailsActivity.class);
-                intent.putExtra("details", entity.getDetails());
+                intent.putExtra("entity", entity);
                 getActivity().startActivity(intent);
             }
         });

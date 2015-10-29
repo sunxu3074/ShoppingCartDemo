@@ -1,15 +1,19 @@
 package io.github.sunxu3074.shoppoingdemo.Entity;
 
+import java.io.Serializable;
+
 /**
  * Created by zhangyan on 2015/10/27.
  */
-public class HealthyEntity {
+public class HealthyEntity implements Serializable{
     private String id;
     private String name;
     private String details;
     private int price;
     private int number;
     private int imgUrl ;
+    //TODO 加一个产品种类
+    // private String category;
 
     public int getImgUrl() {
         return imgUrl;
