@@ -78,7 +78,7 @@
                 android:layout_weight="1"
                 android:gravity="right|center_vertical"
                 android:paddingRight="11dp"
-                android:text="已售出216件"
+                android:text="已售出159件"
                 android:textColor="#ff606461"/>
         </LinearLayout>
     </LinearLayout>

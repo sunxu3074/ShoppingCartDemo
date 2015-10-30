@@ -25,7 +25,6 @@ public class CategoryAdapter extends BaseAdapter {
 
     public CategoryAdapter(Context context,List<CategoryEntity> mDatas) {
         mLayoutInflater = LayoutInflater.from(context);
-        this.mContext = context;
         this.mDatas = mDatas;
     }
 
@@ -50,7 +49,6 @@ public class CategoryAdapter extends BaseAdapter {
             convertView = mLayoutInflater.inflate(R.layout.item_category, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.label = (TextView) convertView.findViewById(R.id.item_category_name);
-//            viewHolder.more = (TextView) convertView.findViewById(R.id.item_category_more);
             viewHolder.details = (TextView) convertView.findViewById(R.id.item_category_details);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.item_category_img);
             viewHolder.number = (TextView) convertView.findViewById(R.id.item_category_number);
@@ -68,7 +66,7 @@ public class CategoryAdapter extends BaseAdapter {
         return convertView;
     }
    static class ViewHolder{
-        TextView label,more,details,number,price;
+        TextView label,details,number,price;
         ImageView image;
     }
 }

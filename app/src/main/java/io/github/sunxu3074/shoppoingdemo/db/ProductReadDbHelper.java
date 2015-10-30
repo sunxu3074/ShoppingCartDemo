@@ -16,15 +16,16 @@ public class ProductReadDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + ProductReaderContract.ProductEntry.TABLE_NAME + " (" +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY " +
-                    "AUTOINCREMENT NOT NULL," +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY + TEXT_TYPE +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY DEFAULT 0 " +
+//                    "NOT NULL DEFAULT 0," +
+                    COMMA_SEP+
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY + TEXT_TYPE + "default 健康产品"+
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER + TEXT_TYPE +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER + TEXT_TYPE +"default 0"+
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE + TEXT_TYPE +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE + TEXT_TYPE +"default 1000"+
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_NAME + TEXT_TYPE +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_NAME + TEXT_TYPE +"default 健康产品系列1"+
 //                    COMMA_SEP +
                     " )";
 

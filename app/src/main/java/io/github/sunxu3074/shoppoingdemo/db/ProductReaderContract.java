@@ -12,7 +12,7 @@ public final class ProductReaderContract {
 
     public static abstract class ProductEntry implements BaseColumns {
         public static final String TABLE_NAME = "entry";
-        public static final String COLUMN_NAME_ENTRY_ID = "_id";
+        public static final String COLUMN_NAME_ENTRY_ID = "product_id";
         public static final String COLUMN_NAME_CATEGORY = "category";
         public static final String COLUMN_NAME_NUMBER = "number";
         public static final String COLUMN_NAME_PRICE = "price";

@@ -1,7 +1,10 @@
 package io.github.sunxu3074.shoppoingdemo.activity;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +15,9 @@ import java.util.ArrayList;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.ShoppingCartEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.adapter.ShoppingCartAdapter;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
+import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
 public class ShoppingCartActivity extends ActionBarActivity {
 
@@ -26,6 +31,21 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
     private ProductReadDbHelper mDbHelper = new ProductReadDbHelper(this);
 
+    private ShoppingCartAdapter mAdapter;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+           int what = msg.what;
+            switch (what) {
+                case 1:
+                    mAdapter = new ShoppingCartAdapter(getApplication(), mDatas);
+                    mListView.setAdapter(mAdapter);
+                    break;
+            }
+        }
+    };
+
 
     @Override
 
@@ -33,36 +53,55 @@ public class ShoppingCartActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
+        initViews();
         initDatas();
+    }
+
+    private void initViews() {
+
+        mListView = (ListView) findViewById(R.id.lv_shopping_cart_activity);
     }
 
     private void initDatas() {
 
-        //长时间操作 另启线程
-        //查询数据库
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        //-------------->android training
+        final Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME, null, null,
+                null,
+                null, null, null);
 
-//
-//        String[] projection = {
-//                ProductReaderContract.ProductEntry._ID,
-//                ProductReaderContract.ProductEntry.COLUMN_NAME_TITLE,
-//                ProductReaderContract.ProductEntry.COLUMN_NAME_UPDATED,
-//        };
-//
-//        String sortOrder =
-//                ProductReaderContract.ProductEntry.COLUMN_NAME_UPDATED + " DESC";
-//
-//        Cursor c = db.query(
-//                ProductReaderContract.ProductEntry.TABLE_NAME,  // The table to query
-//                projection,                               // The columns to return
-//                selection,                                // The columns for the WHERE clause
-//                selectionArgs,                            // The values for the WHERE clause
-//                null,                                     // don't group the rows
-//                null,                                     // don't filter by row groups
-//                sortOrder                                 // The sort order
-//        );
-
+        new Thread() {
+            @Override
+            public void run() {
+                if (cursor != null) {
+                    do {
+                        cursor.moveToFirst();
+            /*
+            String id ;
+            String name;
+            String category
+            int price;
+            int number ;
+            String imgUrl;
+            */
+                        String id = "0000" + cursor.getInt(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry
+                                .COLUMN_NAME_ENTRY_ID));
+                        String name = "健康产品系列1";
+                        String category = "健康产品";
+                        int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
+                        int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER)));
+                        ShoppingCartEntity entity = new ShoppingCartEntity(id, name, category,
+                                price, number, null);
+                        mDatas.add(entity);
+                    } while (cursor.moveToNext());
+                    Message message = Message.obtain();
+                    message.what = 1;
+                    mHandler.sendMessage(message);
+                }
+            }
+        }.start();
     }
 
     @Override

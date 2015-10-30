@@ -33,7 +33,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return getItem(position);
+        return mDatas.get(position);
     }
 
     @Override
@@ -58,10 +58,10 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
 
         ShoppingCartEntity entity = (ShoppingCartEntity) getItem(position);
-        holder.category.setText("健康产品系列1");
+        holder.category.setText(entity.getCategory());
         holder.name.setText(entity.getName());
         holder.price.setText(entity.getPrice() + "");
-        holder.number.setText(entity.getNumber());
+        holder.number.setText(entity.getNumber()+"");
 
         return convertView;
     }

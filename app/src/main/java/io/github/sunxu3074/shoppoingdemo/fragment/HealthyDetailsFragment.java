@@ -49,19 +49,19 @@ public class HealthyDetailsFragment extends Fragment {
      */
     private void initDatas() {
         mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_1));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_2));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_3));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_4));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_3));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_2));
-        mDatas.add(new HealthyEntity("00001", "健康产品1",
-                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 2100, 159, R.drawable.healthy_1));
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_1));
+        mDatas.add(new HealthyEntity("00002", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_2));
+        mDatas.add(new HealthyEntity("00003", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_3));
+        mDatas.add(new HealthyEntity("00004", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_4));
+        mDatas.add(new HealthyEntity("00005", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_3));
+        mDatas.add(new HealthyEntity("00006", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_2));
+        mDatas.add(new HealthyEntity("00007", "健康产品1",
+                "「PUNO培諾®」的天然有機保健品系列，正是以此方式種植及加工，以達至現在都市人的追求標準，確保我們的健康得到保障的承諾.", 1000, 159, R.drawable.healthy_1));
         mAdapter = new HealthyAdapter(getActivity(), mDatas);
         mListView.setAdapter(mAdapter);
 

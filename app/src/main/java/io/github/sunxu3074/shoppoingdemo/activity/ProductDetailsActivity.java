@@ -1,6 +1,8 @@
 package io.github.sunxu3074.shoppoingdemo.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -134,35 +136,115 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
     }
 
+    /***
+     * 插入数据库
+     */
     private void insert2Sqlite() {
-        // 购买数量
-        int number = Integer.parseInt(mTVNumber.getText().toString());
+
+        // 购买数量 number
         // 购买种类
-        // 购买价格
-        int price = entity.getPrice();
-        // 购买id
-        String id = entity.getId();
-        // 购买名称
-        String name = entity.getName();
+        int price = entity.getPrice();   // 购买价格
+        String id = entity.getId(); // 购买id
+        String name = entity.getName();  // 购买名称
 
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
-
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-//        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, id);
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price+"");
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number+"");
+//        boolean flag = queryDatebase(db);
+//        if(flag==false){
+            ContentValues values = new ContentValues();
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, Integer.parseInt(id));
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price+"");
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number+"");
 
-        long rawID = -1;
+            long rawID = -1;
 
-        rawID = db.insert(
-                ProductReaderContract.ProductEntry.TABLE_NAME,
-                null,
-                values);
+            rawID = db.insert(
+                    ProductReaderContract.ProductEntry.TABLE_NAME,
+                    null,
+                    values);
 
+            Toast.makeText(getApplication(), "rawID = " + rawID, Toast.LENGTH_LONG).show();
+
+            values.clear();
+            if (db != null && db.isOpen()) {
+                db.close();
+            }
+//        }
     }
+
+    /***
+     * 查询数据库
+     */
+    private boolean queryDatebase(SQLiteDatabase db) {
+//        String[] projection = {
+//                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID,
+//                ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER,
+//        };
+
+        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+" = ?";
+        String[] selectionArgs = new String[]{Integer.parseInt(entity.getId())+""};
+        Cursor c = db.query(
+                ProductReaderContract.ProductEntry.TABLE_NAME,  // The table to query
+//                projection,                               // The columns to return
+                null,
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                null                                      // The sort order
+        );
+        if(c!=null) {
+            do{
+                c.moveToFirst();
+                int itemId = c.getInt(c.getColumnIndex(ProductReaderContract.ProductEntry
+                        .COLUMN_NAME_ENTRY_ID));
+                int number = Integer.parseInt(c.getString(c.getColumnIndex(ProductReaderContract
+                        .ProductEntry
+                        .COLUMN_NAME_NUMBER)));
+                Toast.makeText(getApplication(), "itemId = " + itemId+"\r\n+numnber"+number, Toast.LENGTH_LONG).show();
+                if (itemId == Integer.parseInt(entity.getId())) {
+                    //TODO 更新number
+                    updateDatebase(number, db);
+                    Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+            }while(c.moveToNext());
+        }
+
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+        return false;
+    }
+
+    /**
+     * 更新数据库
+     */
+    private void updateDatebase(int sqlNumber,SQLiteDatabase db) {
+        sqlNumber+=number;// 购买数量
+
+        // New value for one column
+        ContentValues values = new ContentValues();
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber+"");
+
+        // Which row to update, based on the ID
+        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+ " LIKE ?";
+        String[] selectionArgs = { String.valueOf(entity.getId()) };
+
+        int count = db.update(
+                ProductReaderContract.ProductEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+        Toast.makeText(getApplication(), "count = " + count+"/r/n number="+sqlNumber, Toast.LENGTH_LONG).show();
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
+        values.clear();
+    }
+
 
     private void initViews() {
         mTVList = (TextView) findViewById(R.id.tv_activity_product_details_list);
@@ -208,6 +290,9 @@ public class ProductDetailsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.action_shopping) {
+            Intent intent = new Intent(getApplication(), ShoppingCartActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
