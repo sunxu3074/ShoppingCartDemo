@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.HealthyEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 
 /**
  * Created by zhangyan on 2015/10/27.
@@ -59,7 +60,7 @@ public class HealthyAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HealthyEntity entity = (HealthyEntity) getItem(position);
-        holder.img.setImageResource(entity.getImgUrl());
+        holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
         holder.price.setText("￥"+entity.getPrice());
         holder.number.setText("已售出"+entity.getNumber()+"件");
         holder.details.setText(entity.getDetails());

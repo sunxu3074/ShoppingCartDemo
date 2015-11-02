@@ -18,8 +18,7 @@ public class CategoryDetailsActivity extends ActionBarActivity {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-    private String[] mTitles = new String[]{"健康产品", "健康产品", "健康产品", "健康产品", "健康产品", "健康产品",
-            "健康产品", "健康产品",};
+    private String[] mTitles = new String[]{"保健产品", "丸剂", "书籍"};
 
     /**
      * 记录当前的position

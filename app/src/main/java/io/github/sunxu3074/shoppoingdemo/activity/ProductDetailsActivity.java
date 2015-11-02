@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,10 +23,16 @@ import android.widget.Toast;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.HealthyEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
 public class ProductDetailsActivity extends ActionBarActivity {
+
+    private static final int QUERY_YES = 0x100;
+    private static final int QUERY_NO = 0x101;
+
+    private static boolean ISQUERYED = false;
 
     private HealthyEntity entity;
 
@@ -45,6 +52,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
     private ImageView mImgDetails;
     private ImageView mImgClose;
+    private ImageView mImgIcon;
 
     private Button mBtnOK;
 
@@ -58,8 +66,23 @@ public class ProductDetailsActivity extends ActionBarActivity {
      */
     private int number = 1;
 
-    private Handler handler = new Handler();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+           int what = msg.what;
+            switch (what) {
+                case QUERY_YES :
+                    int number = (int) msg.obj;
+                    updateDatebase(number);
+                    break;
+                case QUERY_NO :
+                    insert2Sqlite();
+                    break;
+            }
+        }
+    };
 
+    private SQLiteDatabase db;
 
 
     @Override
@@ -93,7 +116,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
                 //TODO 发送请求到后台
                 // 保存产品信息到数据库
 
-                insert2Sqlite();
+                queryDatebase();
 
                 Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
 
@@ -136,7 +159,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
     }
 
-    /***
+    /**
      * 插入数据库
      */
     private void insert2Sqlite() {
@@ -148,101 +171,106 @@ public class ProductDetailsActivity extends ActionBarActivity {
         String name = entity.getName();  // 购买名称
 
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db = mDbHelper.getWritableDatabase();
 
-//        boolean flag = queryDatebase(db);
-//        if(flag==false){
-            ContentValues values = new ContentValues();
-            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, Integer.parseInt(id));
-            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price+"");
-            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
-            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number+"");
+        ContentValues values = new ContentValues();
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, id);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price + "");
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number + "");
 
-            long rawID = -1;
+        long rawID = -1;
 
-            rawID = db.insert(
-                    ProductReaderContract.ProductEntry.TABLE_NAME,
-                    null,
-                    values);
+        rawID = db.insert(
+                ProductReaderContract.ProductEntry.TABLE_NAME,
+                null,
+                values);
 
-            Toast.makeText(getApplication(), "rawID = " + rawID, Toast.LENGTH_LONG).show();
-
-            values.clear();
-            if (db != null && db.isOpen()) {
-                db.close();
-            }
-//        }
+        Toast.makeText(getApplication(), "rawID = " + rawID, Toast.LENGTH_LONG).show();
     }
 
-    /***
+    /**
      * 查询数据库
      */
-    private boolean queryDatebase(SQLiteDatabase db) {
+    private void queryDatebase() {
 //        String[] projection = {
 //                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID,
 //                ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER,
 //        };
 
-        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+" = ?";
-        String[] selectionArgs = new String[]{Integer.parseInt(entity.getId())+""};
-        Cursor c = db.query(
-                ProductReaderContract.ProductEntry.TABLE_NAME,  // The table to query
+        ISQUERYED = false;
+
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
+        db = mDbHelper.getWritableDatabase();
+
+        Cursor c = null;
+        try {
+            String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " = ?";
+            String[] selectionArgs = new String[]{entity.getId()};
+            c = db.query(
+                    ProductReaderContract.ProductEntry.TABLE_NAME,  // The table to query
 //                projection,                               // The columns to return
-                null,
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // The sort order
-        );
-        if(c!=null) {
-            do{
-                c.moveToFirst();
-                int itemId = c.getInt(c.getColumnIndex(ProductReaderContract.ProductEntry
-                        .COLUMN_NAME_ENTRY_ID));
-                int number = Integer.parseInt(c.getString(c.getColumnIndex(ProductReaderContract
-                        .ProductEntry
-                        .COLUMN_NAME_NUMBER)));
-                Toast.makeText(getApplication(), "itemId = " + itemId+"\r\n+numnber"+number, Toast.LENGTH_LONG).show();
-                if (itemId == Integer.parseInt(entity.getId())) {
-                    //TODO 更新number
-                    updateDatebase(number, db);
-                    Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
-                    return true;
+                    null,
+                    selection,                                // The columns for the WHERE clause
+                    selectionArgs,                            // The values for the WHERE clause
+                    null,                                     // don't group the rows
+                    null,                                     // don't filter by row groups
+                    null                                      // The sort order
+            );
+
+            if (c != null) {
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                    String itemId = c.getString(c.getColumnIndex(ProductReaderContract.ProductEntry
+                            .COLUMN_NAME_ENTRY_ID));
+                    int number = Integer.parseInt(c.getString(c.getColumnIndex(ProductReaderContract
+                            .ProductEntry
+                            .COLUMN_NAME_NUMBER)));
+                    if (itemId.equals(entity.getId())) {
+                        Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
+                        ISQUERYED = true;
+                        Message message = Message.obtain();
+                        message.what =  QUERY_YES ;
+                        message.obj = number;
+                        handler.sendMessage(message);
+                    }
                 }
-            }while(c.moveToNext());
+            }
+            if (!ISQUERYED) {
+                Message message = Message.obtain();
+                message.what =  QUERY_NO ;
+                handler.sendMessage(message);
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
 
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-        return false;
     }
+
 
     /**
      * 更新数据库
      */
-    private void updateDatebase(int sqlNumber,SQLiteDatabase db) {
-        sqlNumber+=number;// 购买数量
+    private void updateDatebase(int sqlNumber) {
+
+        sqlNumber += number;// 购买数量
 
         // New value for one column
         ContentValues values = new ContentValues();
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber+"");
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber + "");
 
         // Which row to update, based on the ID
-        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+ " LIKE ?";
-        String[] selectionArgs = { String.valueOf(entity.getId()) };
+        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(entity.getId())};
 
         int count = db.update(
                 ProductReaderContract.ProductEntry.TABLE_NAME,
                 values,
                 selection,
                 selectionArgs);
-        Toast.makeText(getApplication(), "count = " + count+"/r/n number="+sqlNumber, Toast.LENGTH_LONG).show();
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
-        values.clear();
+        Toast.makeText(getApplication(), "count = " + count + "/r/n number=" + sqlNumber, Toast
+                .LENGTH_LONG).show();
     }
 
 
@@ -253,6 +281,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
         mImgDetails = (ImageView) findViewById(R.id.img_activity_product);
 
         mPop = LayoutInflater.from(this).inflate(R.layout.popup_add_to_cart, null);
+        mImgIcon = (ImageView) mPop.findViewById(R.id.img_pop_icon);
         mBtnOK = (Button) mPop.findViewById(R.id.btn_pop_ok);
         mBtnMinute = (Button) mPop.findViewById(R.id.btn_pop_minute);
         mBtnPlus = (Button) mPop.findViewById(R.id.btn_pop_plus);
@@ -266,9 +295,12 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private void initDatas() {
 
         entity = (HealthyEntity) getIntent().getSerializableExtra("entity");
+        mImgDetails.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
         mTVDetails.setText(entity.getDetails());
-        mTVPrice.setText("￥"+entity.getPrice());
+        mTVPrice.setText("￥" + entity.getPrice());
         mTVPopDetails.setText(entity.getDetails());
+        mTVList.setText(entity.getPrice()+900+"");
+        mImgIcon.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
         mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
     }
@@ -290,7 +322,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if(id == R.id.action_shopping) {
+        } else if (id == R.id.action_shopping) {
             Intent intent = new Intent(getApplication(), ShoppingCartActivity.class);
             startActivity(intent);
         }
@@ -318,11 +350,16 @@ public class ProductDetailsActivity extends ActionBarActivity {
             isPopOpened = false;
             mPopupWindow = null;
         }
+
+        if (db != null && db.isOpen()) {
+            db.close();
+            db = null;
+        }
     }
 
-    private void setWindowBehind(boolean flag) {
+    private void setWindowBehind(boolean isSetWindowBehind) {
         final WindowManager.LayoutParams lp = getWindow().getAttributes();
-        if (flag) {
+        if (isSetWindowBehind) {
             lp.alpha = 0.3f;
         } else {
             lp.alpha = 1.0f;

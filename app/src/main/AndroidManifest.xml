@@ -18,16 +18,19 @@
         </activity>
         <activity
             android:name=".activity.CategoryDetailsActivity"
-            android:label="@string/title_activity_category_details" >
+            android:label="@string/title_activity_category_details"
+            android:parentActivityName=".activity.AllActivity">
         </activity>
         <activity
             android:name=".activity.ProductDetailsActivity"
             android:label="@string/title_activity_product_details"
-            android:theme="@style/CustomActionBarTheme" >
+            android:theme="@style/CustomActionBarTheme"
+            android:parentActivityName=".activity.CategoryDetailsActivity">
         </activity>
         <activity
             android:name=".activity.ShoppingCartActivity"
-            android:label="@string/title_activity_shopping_cart" >
+            android:label="@string/title_activity_shopping_cart"
+            android:parentActivityName=".activity.ProductDetailsActivity">
         </activity>
     </application>
 

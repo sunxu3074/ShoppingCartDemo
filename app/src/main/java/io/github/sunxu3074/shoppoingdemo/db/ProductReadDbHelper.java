@@ -16,20 +16,22 @@ public class ProductReadDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + ProductReaderContract.ProductEntry.TABLE_NAME + " (" +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY DEFAULT 0 " +
-//                    "NOT NULL DEFAULT 0," +
-                    COMMA_SEP+
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY + TEXT_TYPE + "default 健康产品"+
+                    ProductReaderContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" +
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER + TEXT_TYPE +"default 0"+
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE +
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE + TEXT_TYPE +"default 1000"+
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY + TEXT_TYPE +
+                    " default 健康产品" +
                     COMMA_SEP +
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_NAME + TEXT_TYPE +"default 健康产品系列1"+
-//                    COMMA_SEP +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER + TEXT_TYPE + " default " +
+                    "0" +
+                    COMMA_SEP +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE + TEXT_TYPE + " default " +
+                    "1000" +
+                    COMMA_SEP +
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_NAME + TEXT_TYPE + " default " +
+                    "健康产品系列1" +
                     " )";
-
-
 
 
     public ProductReadDbHelper(Context context) {

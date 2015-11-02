@@ -1,14 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+              android:orientation="vertical"
               >
 
 
     <ListView
         android:id="@+id/lv_shopping_cart_activity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="#ffffffff"
         android:cacheColorHint="#00000000"
         android:descendantFocusability="blocksDescendants"
@@ -49,7 +51,8 @@
             android:layout_gravity="right"
             android:text="结算(1)"
             android:textColor="#ffffffff"
-            android:background="#ffea5d15"/>
+            android:background="#ffea5d15"
+            android:id="@+id/btn_activity_shopping_cart_clearing"/>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
