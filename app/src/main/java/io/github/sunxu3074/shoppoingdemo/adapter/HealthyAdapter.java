@@ -60,7 +60,7 @@ public class HealthyAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         HealthyEntity entity = (HealthyEntity) getItem(position);
-        holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
+        holder.img.setImageResource(entity.getImgUrl());
         holder.price.setText("￥"+entity.getPrice());
         holder.number.setText("已售出"+entity.getNumber()+"件");
         holder.details.setText(entity.getDetails());

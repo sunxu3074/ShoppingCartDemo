@@ -13,6 +13,7 @@ import java.util.List;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.CategoryEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
+import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 
 /**
  * Created by zhangyan on 2015/10/21.
@@ -51,8 +52,8 @@ public class CategoryAdapter extends BaseAdapter {
             viewHolder.label = (TextView) convertView.findViewById(R.id.item_category_name);
             viewHolder.details = (TextView) convertView.findViewById(R.id.item_category_details);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.item_category_img);
-            viewHolder.number = (TextView) convertView.findViewById(R.id.item_category_number);
-            viewHolder.price = (TextView) convertView.findViewById(R.id.item_category_price);
+//            viewHolder.number = (TextView) convertView.findViewById(R.id.item_category_number);
+//            viewHolder.price = (TextView) convertView.findViewById(R.id.item_category_price);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -60,13 +61,13 @@ public class CategoryAdapter extends BaseAdapter {
         CategoryEntity entity = (CategoryEntity) getItem(position);
         viewHolder.label.setText(entity.getName());
         viewHolder.details.setText(entity.getDetails());
-        viewHolder.image.setImageResource(R.drawable.category);
-        viewHolder.number.setText("已售出"+entity.getNumber()+"件");
-        viewHolder.price.setText("￥"+entity.getPrice());
+        viewHolder.image.setImageResource(ConstUtils.CATEGORY_PICTURES[Integer.parseInt(entity.getImgUrl())-1]);
+//        viewHolder.number.setText("已售出"+entity.getNumber()+"件");
+//        viewHolder.price.setText("￥"+entity.getPrice());
         return convertView;
     }
    static class ViewHolder{
-        TextView label,details,number,price;
+        TextView label,details;
         ImageView image;
     }
 }

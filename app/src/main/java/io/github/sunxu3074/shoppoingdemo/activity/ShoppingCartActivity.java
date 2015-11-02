@@ -98,14 +98,18 @@ public class ShoppingCartActivity extends ActionBarActivity {
                         String id = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_ENTRY_ID));
-                        String name = "健康产品系列1";
-                        String category = "健康产品";
+                        String name = cursor.getString(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry
+                                        .COLUMN_NAME_NAME));;
+                        String category = cursor.getString(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry
+                                        .COLUMN_NAME_CATEGORY));
                         int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
                         int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER)));
                         ShoppingCartEntity entity = new ShoppingCartEntity(id, name, category,
-                                price, number, Integer.parseInt(id)-1);
+                                price, number, Integer.parseInt(id));
                         mDatas.add(entity);
                     }
                     if (cursor != null) {
@@ -190,8 +194,8 @@ public class ShoppingCartActivity extends ActionBarActivity {
             holder.category.setText(entity.getCategory());
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
-            holder.number.setText(""+entity.getNumber());
-            holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
+            holder.number.setText("x"+entity.getNumber());
+            holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()/10000-1][entity.getImgUrl()%10000-1]);
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

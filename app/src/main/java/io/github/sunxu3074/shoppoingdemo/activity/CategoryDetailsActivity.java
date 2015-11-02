@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
-import io.github.sunxu3074.shoppoingdemo.fragment.HealthyDetailsFragment;
+import io.github.sunxu3074.shoppoingdemo.fragment.FootWashFragment;
+import io.github.sunxu3074.shoppoingdemo.fragment.PillFragment;
 
 public class CategoryDetailsActivity extends ActionBarActivity {
 
@@ -25,8 +28,8 @@ public class CategoryDetailsActivity extends ActionBarActivity {
      */
     private int currentPosition;
 
-//    private static final ArrayList<HealthyDetailsFragment> fragments = new ArrayList<>();
-//    private static final HealthyDetailsFragment fragment = new HealthyDetailsFragment();
+//    private static final ArrayList<FootWashFragment> fragments = new ArrayList<>();
+//    private static final FootWashFragment fragment = new FootWashFragment();
 //
 //    static {
 //        fragments.add(fragment);
@@ -48,7 +51,6 @@ public class CategoryDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_category_details);
 
         initViews();
-        initDatas();
         addListeners();
 
     }
@@ -72,17 +74,6 @@ public class CategoryDetailsActivity extends ActionBarActivity {
         });*/
     }
 
-    private void initDatas() {
-
-        currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION, -1);
-
-        //TabLayout.TabLayoutOnPageChangeListener 中记录了tab被点击怎么goto的方法..
-        mTabLayout.getTabAt(currentPosition).select();
-
-
-    }
-
-
     private void initViews() {
 
         mTabLayout = (TabLayout) findViewById(R.id.activity_category_tablayout);
@@ -90,9 +81,12 @@ public class CategoryDetailsActivity extends ActionBarActivity {
 
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
-            public Fragment getItem(int i) {
+            public Fragment getItem(int position) {
 //                Toast.makeText(getApplication(), "i=" + i, Toast.LENGTH_LONG).show();
-                return new HealthyDetailsFragment();
+                if (position == 0) {
+                    return new FootWashFragment();
+                }
+                return new PillFragment();
             }
 
             @Override
@@ -106,7 +100,34 @@ public class CategoryDetailsActivity extends ActionBarActivity {
             }
         });
 
-        mTabLayout.setupWithViewPager(mViewPager);
+//        mTabLayout.setupWithViewPager(mViewPager);
+
+        currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION, 0);
+
+        //TabLayout.TabLayoutOnPageChangeListener 中记录了tab被点击怎么goto的方法..
+
+
+//        mTabLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mTabLayout.setupWithViewPager(mViewPager);
+//
+//                mTabLayout.getTabAt(currentPosition).select();
+//            }
+//        });
+
+        if (ViewCompat.isLaidOut(mTabLayout)) {
+            mTabLayout.setupWithViewPager(mViewPager);
+        } else {
+            mTabLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    mTabLayout.setupWithViewPager(mViewPager);
+
+                    mTabLayout.removeOnLayoutChangeListener(this);
+                }
+            });
+        }
     }
 
     @Override

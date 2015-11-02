@@ -69,13 +69,13 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-           int what = msg.what;
+            int what = msg.what;
             switch (what) {
-                case QUERY_YES :
+                case QUERY_YES:
                     int number = (int) msg.obj;
                     updateDatebase(number);
                     break;
-                case QUERY_NO :
+                case QUERY_NO:
                     insert2Sqlite();
                     break;
             }
@@ -165,9 +165,17 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private void insert2Sqlite() {
 
         // 购买数量 number
-        // 购买种类
+       // 购买种类
         int price = entity.getPrice();   // 购买价格
         String id = entity.getId(); // 购买id
+        String category = "保健产品";
+        if(Integer.parseInt(id)>30000) {
+            category = "书籍";
+        }else if (Integer.parseInt(id)>20000) {
+            category = "丸剂";
+        }else {
+            category = "保健产品";
+        }
         String name = entity.getName();  // 购买名称
 
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
@@ -178,6 +186,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, price + "");
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number + "");
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY, category);
 
         long rawID = -1;
 
@@ -229,7 +238,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
                         Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
                         ISQUERYED = true;
                         Message message = Message.obtain();
-                        message.what =  QUERY_YES ;
+                        message.what = QUERY_YES;
                         message.obj = number;
                         handler.sendMessage(message);
                     }
@@ -237,7 +246,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
             }
             if (!ISQUERYED) {
                 Message message = Message.obtain();
-                message.what =  QUERY_NO ;
+                message.what = QUERY_NO;
                 handler.sendMessage(message);
             }
         } finally {
@@ -295,12 +304,13 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private void initDatas() {
 
         entity = (HealthyEntity) getIntent().getSerializableExtra("entity");
-        mImgDetails.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
+
+        mImgDetails.setImageResource(entity.getImgUrl());
         mTVDetails.setText(entity.getDetails());
         mTVPrice.setText("￥" + entity.getPrice());
         mTVPopDetails.setText(entity.getDetails());
-        mTVList.setText(entity.getPrice()+900+"");
-        mImgIcon.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()]);
+        mTVList.setText(entity.getPrice() + 900 + "");
+        mImgIcon.setImageResource(entity.getImgUrl());
         mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
     }

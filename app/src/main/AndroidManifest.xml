@@ -30,7 +30,7 @@
         <activity
             android:name=".activity.ShoppingCartActivity"
             android:label="@string/title_activity_shopping_cart"
-            android:parentActivityName=".activity.ProductDetailsActivity">
+            >
         </activity>
     </application>
 
