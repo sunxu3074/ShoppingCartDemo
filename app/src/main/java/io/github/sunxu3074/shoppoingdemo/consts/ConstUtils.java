@@ -15,8 +15,10 @@ public class ConstUtils {
             R.drawable.healthy_book,
     };
 
-    public static final int[][] PICTURES = {{R.drawable.foot_wash}, {R.drawable.pill_1, R.drawable.pill_2, R.drawable.pill_3, R.drawable.pill_4, R.drawable.pill_5,},
-            {R.drawable.book_1,R.drawable.book_2,R.drawable.book_3,R.drawable.book_4,R.drawable.book_5,R.drawable.book_6,R.drawable.book_7,R.drawable.book_8,}};
+    public static final int[][] PICTURES = {{R.drawable.foot_wash}, {R.drawable.pill_1, R
+            .drawable.pill_2, R.drawable.pill_3, R.drawable.pill_4, R.drawable.pill_5,},
+            {R.drawable.book_1, R.drawable.book_2, R.drawable.book_3, R.drawable.book_4, R
+                    .drawable.book_5, R.drawable.book_6, R.drawable.book_7, R.drawable.book_8,}};
 
 
 }

@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.HealthyEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
-import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
@@ -41,6 +40,8 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private TextView mTVNumber;
     private TextView mTVPopDetails;
     private TextView mTVPrice;
+    private TextView mTVTopPrice;
+    private TextView mTVPopCategory;
 
     private Button mBtnAddToCart;
     private Button mBtnMinute;
@@ -288,6 +289,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
         mTVDetails = (TextView) findViewById(R.id.tv_activity_product_details_details);
         mBtnAddToCart = (Button) findViewById(R.id.btn_activity_product_details_add_to_cart);
         mImgDetails = (ImageView) findViewById(R.id.img_activity_product);
+        mTVTopPrice = (TextView) findViewById(R.id.tv_activity_product_details_price);
 
         mPop = LayoutInflater.from(this).inflate(R.layout.popup_add_to_cart, null);
         mImgIcon = (ImageView) mPop.findViewById(R.id.img_pop_icon);
@@ -298,6 +300,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
         mTVNumber = (TextView) mPop.findViewById(R.id.tv_pop_number);
         mTVPopDetails = (TextView) mPop.findViewById(R.id.tv_pop_details);
         mTVPrice = (TextView) mPop.findViewById(R.id.tv_pop_price);
+        mTVPopCategory = (TextView) mPop.findViewById(R.id.tv_pop_category);
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1080);
     }
 
@@ -305,12 +308,22 @@ public class ProductDetailsActivity extends ActionBarActivity {
 
         entity = (HealthyEntity) getIntent().getSerializableExtra("entity");
 
+        String category = "";
         mImgDetails.setImageResource(entity.getImgUrl());
         mTVDetails.setText(entity.getDetails());
+        mTVTopPrice.setText("￥" + entity.getPrice());
         mTVPrice.setText("￥" + entity.getPrice());
         mTVPopDetails.setText(entity.getDetails());
-        mTVList.setText(entity.getPrice() + 900 + "");
+        mTVList.setText("￥" + (entity.getPrice() + 900));
         mImgIcon.setImageResource(entity.getImgUrl());
+        if(Integer.parseInt(entity.getId())/10000==1){
+            category = "保健产品";
+        }else if(Integer.parseInt(entity.getId())/10000==2){
+            category = "丸剂";
+        }else {
+            category = "书籍";
+        }
+        mTVPopCategory.setText(category);
         mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
     }

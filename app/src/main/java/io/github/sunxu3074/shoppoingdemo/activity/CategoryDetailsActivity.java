@@ -1,18 +1,22 @@
 package io.github.sunxu3074.shoppoingdemo.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
+import io.github.sunxu3074.shoppoingdemo.fragment.BookFragment;
 import io.github.sunxu3074.shoppoingdemo.fragment.FootWashFragment;
 import io.github.sunxu3074.shoppoingdemo.fragment.PillFragment;
 
@@ -28,22 +32,7 @@ public class CategoryDetailsActivity extends ActionBarActivity {
      */
     private int currentPosition;
 
-//    private static final ArrayList<FootWashFragment> fragments = new ArrayList<>();
-//    private static final FootWashFragment fragment = new FootWashFragment();
-//
-//    static {
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//        fragments.add(fragment);
-//    }
-
-//    private Object[] fragments = new Object[]{fragment,fragment,fragment,fragment,fragment,
-// fragment,fragment,fragment,};
+    private int[] icons = {R.drawable.foot_icon, R.drawable.pill_icon, R.drawable.book_icon};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +40,61 @@ public class CategoryDetailsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_category_details);
 
         initViews();
-        addListeners();
 
     }
 
-    private void addListeners() {
-       /* mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+    private void initViews() {
+
+        mViewPager = (ViewPager) findViewById(R.id.activity_category_viewpager);
+        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                Log.d("position", position+"");
+                if (position == 0) {
+                    return new FootWashFragment();
+                } else if (position == 1) {
+                    return new PillFragment();
+                } else if (position == 2) {
+                    return new BookFragment();
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return mTitles.length;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                // Generate title based on item position
+                Drawable d = getResources().getDrawable(icons[position]);
+                d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+
+                // Replace blank spaces with image icon
+                SpannableString sb = new SpannableString("   " + mTitles[position]);
+                ImageSpan imageSpan = new ImageSpan(d, ImageSpan.ALIGN_BOTTOM);
+                sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                return sb;
+            }
+
+        });
+
+        //TODO
+        currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION, 0);
+        mTabLayout = (TabLayout) findViewById(R.id.activity_category_tablayout);
+        mTabLayout.setupWithViewPager(mViewPager);
+
+//        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+
+/*
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
+                Log.d("tab position", tab.getPosition() + "");
+//                mViewPager.setCurrentItem(tab.getPosition());
+//                mTabLayout.getTabAt(tab.getPosition()).select();
             }
 
             @Override
@@ -71,63 +106,11 @@ public class CategoryDetailsActivity extends ActionBarActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });*/
-    }
-
-    private void initViews() {
-
-        mTabLayout = (TabLayout) findViewById(R.id.activity_category_tablayout);
-        mViewPager = (ViewPager) findViewById(R.id.activity_category_viewpager);
-
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-//                Toast.makeText(getApplication(), "i=" + i, Toast.LENGTH_LONG).show();
-                if (position == 0) {
-                    return new FootWashFragment();
-                }
-                return new PillFragment();
-            }
-
-            @Override
-            public int getCount() {
-                return mTitles.length;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mTitles[position];
-            }
         });
-
-//        mTabLayout.setupWithViewPager(mViewPager);
-
-        currentPosition = getIntent().getIntExtra(ConstUtils.ALLACTIVITY_KEY_POSITION, 0);
-
+*/
         //TabLayout.TabLayoutOnPageChangeListener 中记录了tab被点击怎么goto的方法..
+        mTabLayout.getTabAt(currentPosition).select();
 
-
-//        mTabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mTabLayout.setupWithViewPager(mViewPager);
-//
-//                mTabLayout.getTabAt(currentPosition).select();
-//            }
-//        });
-
-        if (ViewCompat.isLaidOut(mTabLayout)) {
-            mTabLayout.setupWithViewPager(mViewPager);
-        } else {
-            mTabLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                @Override
-                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                    mTabLayout.setupWithViewPager(mViewPager);
-
-                    mTabLayout.removeOnLayoutChangeListener(this);
-                }
-            });
-        }
     }
 
     @Override

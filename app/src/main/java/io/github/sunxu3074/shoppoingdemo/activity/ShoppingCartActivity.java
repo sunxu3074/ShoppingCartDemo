@@ -40,6 +40,10 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
     private TextView mTVTotal;
 
+    private CheckBox mCheckBox;
+
+    private boolean isAllChecked;
+
     /**合计*/
     private int mTotalMoney = 0 ;
     private int mTotalChecked = 0 ;
@@ -64,6 +68,11 @@ public class ShoppingCartActivity extends ActionBarActivity {
         }
     };
 
+    private   Callback mCallback ;
+
+    private void setmCallback(Callback mCallback){
+        this.mCallback = mCallback;
+    }
 
     @Override
 
@@ -80,6 +89,15 @@ public class ShoppingCartActivity extends ActionBarActivity {
         mListView = (ListView) findViewById(R.id.lv_shopping_cart_activity);
         mBtnClearing = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
         mTVTotal = (TextView) findViewById(R.id.tv_activity_shopping_cart_total);
+        mCheckBox = (CheckBox) findViewById(R.id.cb_activity_shopping_cart);
+
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isAllChecked = isChecked;
+                mCallback.setChecked(isAllChecked);
+            }
+        });
 
     }
 
@@ -148,10 +166,11 @@ public class ShoppingCartActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   private class ShoppingCartAdapter extends BaseAdapter {
+   private class ShoppingCartAdapter extends BaseAdapter implements Callback {
 
         private LayoutInflater mInflater;
         private ArrayList<ShoppingCartEntity> mDatas = new ArrayList<>();
+       private ViewHolder holder ;
 
         public ShoppingCartAdapter(Context context, ArrayList<ShoppingCartEntity> mDatas) {
             mInflater = LayoutInflater.from(context);
@@ -175,7 +194,7 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+             holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.item_shopping_cart,parent,false);
@@ -195,7 +214,8 @@ public class ShoppingCartActivity extends ActionBarActivity {
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText("x"+entity.getNumber());
-            holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl()/10000-1][entity.getImgUrl()%10000-1]);
+            holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl() / 10000 -
+                    1][entity.getImgUrl() % 10000 - 1]);
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -215,11 +235,19 @@ public class ShoppingCartActivity extends ActionBarActivity {
             return convertView;
         }
 
-         class ViewHolder{
-            private CheckBox cb ;
-            private ImageView img;
-            private TextView name,category,price,number;
+       @Override
+       public void setChecked(boolean checked) {
+           holder.cb.setChecked(checked);
+       }
+
+       class ViewHolder{
+             CheckBox cb ;
+             ImageView img;
+             TextView name,category,price,number;
         }
     }
 
+    interface Callback{
+        void setChecked(boolean checked);
+    }
 }

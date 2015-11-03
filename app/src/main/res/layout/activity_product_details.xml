@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="11dp"
-                android:text="￥1700"
+                android:text="￥0"
                 android:textColor="#ff606461"
                 android:layout_marginBottom="2dp"/>
 
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="11dp"
                 android:gravity="left|center_vertical"
-                android:text="￥1000"
+                android:text="￥0"
                 android:textColor="#ffea1a15"/>
         </LinearLayout>
 
