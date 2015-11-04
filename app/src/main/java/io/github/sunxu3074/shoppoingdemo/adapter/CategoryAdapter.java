@@ -21,7 +21,6 @@ import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 public class CategoryAdapter extends BaseAdapter {
 
     private LayoutInflater mLayoutInflater;
-    private Context mContext;
     private List<CategoryEntity> mDatas = new ArrayList<>();
 
     public CategoryAdapter(Context context,List<CategoryEntity> mDatas) {
@@ -52,8 +51,6 @@ public class CategoryAdapter extends BaseAdapter {
             viewHolder.label = (TextView) convertView.findViewById(R.id.item_category_name);
             viewHolder.details = (TextView) convertView.findViewById(R.id.item_category_details);
             viewHolder.image = (ImageView) convertView.findViewById(R.id.item_category_img);
-//            viewHolder.number = (TextView) convertView.findViewById(R.id.item_category_number);
-//            viewHolder.price = (TextView) convertView.findViewById(R.id.item_category_price);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -62,8 +59,6 @@ public class CategoryAdapter extends BaseAdapter {
         viewHolder.label.setText(entity.getName());
         viewHolder.details.setText(entity.getDetails());
         viewHolder.image.setImageResource(ConstUtils.CATEGORY_PICTURES[Integer.parseInt(entity.getImgUrl())-1]);
-//        viewHolder.number.setText("已售出"+entity.getNumber()+"件");
-//        viewHolder.price.setText("￥"+entity.getPrice());
         return convertView;
     }
    static class ViewHolder{

@@ -22,6 +22,8 @@ import io.github.sunxu3074.shoppoingdemo.fragment.PillFragment;
 
 public class CategoryDetailsActivity extends ActionBarActivity {
 
+
+
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
@@ -46,7 +48,7 @@ public class CategoryDetailsActivity extends ActionBarActivity {
     private void initViews() {
 
         mViewPager = (ViewPager) findViewById(R.id.activity_category_viewpager);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {

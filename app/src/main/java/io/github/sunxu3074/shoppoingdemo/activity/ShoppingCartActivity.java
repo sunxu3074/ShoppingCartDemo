@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.github.sunxu3074.shoppoingdemo.Entity.ShoppingCartEntity;
 import io.github.sunxu3074.shoppoingdemo.R;
@@ -44,9 +45,11 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
     private boolean isAllChecked;
 
-    /**合计*/
-    private int mTotalMoney = 0 ;
-    private int mTotalChecked = 0 ;
+    /**
+     * 合计
+     */
+    private int mTotalMoney = 0;
+    private int mTotalChecked = 0;
 
 
     private ArrayList<ShoppingCartEntity> mDatas = new ArrayList<>();
@@ -63,16 +66,11 @@ public class ShoppingCartActivity extends ActionBarActivity {
                 case MSG_WHAT:
                     mAdapter = new ShoppingCartAdapter(getApplication(), mDatas);
                     mListView.setAdapter(mAdapter);
+                    addListeners();
                     break;
             }
         }
     };
-
-    private   Callback mCallback ;
-
-    private void setmCallback(Callback mCallback){
-        this.mCallback = mCallback;
-    }
 
     @Override
 
@@ -82,6 +80,21 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
         initViews();
         initDatas();
+    }
+
+    private void addListeners() {
+
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+                    for (int i = 0; i < mDatas.size() ; i++) {
+                        map.put(i, isChecked);
+                    }
+                    mAdapter.setmMaps(map);
+                    mAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void initViews() {
@@ -95,7 +108,6 @@ public class ShoppingCartActivity extends ActionBarActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isAllChecked = isChecked;
-                mCallback.setChecked(isAllChecked);
             }
         });
 
@@ -118,7 +130,8 @@ public class ShoppingCartActivity extends ActionBarActivity {
                                         .COLUMN_NAME_ENTRY_ID));
                         String name = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
-                                        .COLUMN_NAME_NAME));;
+                                        .COLUMN_NAME_NAME));
+                        ;
                         String category = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_CATEGORY));
@@ -166,15 +179,29 @@ public class ShoppingCartActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   private class ShoppingCartAdapter extends BaseAdapter implements Callback {
+    private  class ShoppingCartAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
         private ArrayList<ShoppingCartEntity> mDatas = new ArrayList<>();
-       private ViewHolder holder ;
+        private ViewHolder holder;
+
+        public  HashMap<Integer,Boolean> mMaps = new HashMap<>();
+
+        public  HashMap<Integer, Boolean> getMap() {
+            return mMaps;
+        }
+
+        public void setmMaps(HashMap<Integer, Boolean> mMaps){
+            this.mMaps = mMaps;
+        }
+
 
         public ShoppingCartAdapter(Context context, ArrayList<ShoppingCartEntity> mDatas) {
             mInflater = LayoutInflater.from(context);
             this.mDatas = mDatas;
+            for (int i = 0; i < mDatas.size() ; i++) {
+                mMaps.put(i, false);
+            }
         }
 
         @Override
@@ -194,18 +221,22 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-             holder = null;
+            holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = mInflater.inflate(R.layout.item_shopping_cart,parent,false);
+                convertView = mInflater.inflate(R.layout.item_shopping_cart, parent, false);
                 holder.cb = (CheckBox) convertView.findViewById(R.id.cb_item_shopping_cart);
                 holder.name = (TextView) convertView.findViewById(R.id.tv_item_shopping_cart_name);
-                holder.category = (TextView) convertView.findViewById(R.id.tv_item_shopping_cart_category);
-                holder.price = (TextView) convertView.findViewById(R.id.tv_item_shopping_cart_price);
-                holder.number = (TextView) convertView.findViewById(R.id.tv_item_shopping_cart_number);
-                holder.img = (ImageView) convertView.findViewById(R.id.img_item_shopping_cart_number);
+                holder.category = (TextView) convertView.findViewById(R.id
+                        .tv_item_shopping_cart_category);
+                holder.price = (TextView) convertView.findViewById(R.id
+                        .tv_item_shopping_cart_price);
+                holder.number = (TextView) convertView.findViewById(R.id
+                        .tv_item_shopping_cart_number);
+                holder.img = (ImageView) convertView.findViewById(R.id
+                        .img_item_shopping_cart_number);
                 convertView.setTag(holder);
-            }else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
@@ -213,41 +244,34 @@ public class ShoppingCartActivity extends ActionBarActivity {
             holder.category.setText(entity.getCategory());
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
-            holder.number.setText("x"+entity.getNumber());
+            holder.number.setText("x" + entity.getNumber());
             holder.img.setImageResource(ConstUtils.PICTURES[entity.getImgUrl() / 10000 -
                     1][entity.getImgUrl() % 10000 - 1]);
+            holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        mTotalMoney += entity.getNumber()*entity.getPrice();
-                        mTotalChecked ++;
-                    }else {
-                        mTotalChecked --;
-                        mTotalMoney -= entity.getNumber()*entity.getPrice();
+                    if (isChecked) {
+                        mTotalMoney += entity.getNumber() * entity.getPrice();
+                        mTotalChecked++;
+                    } else {
+                        mTotalChecked--;
+                        mTotalMoney -= entity.getNumber() * entity.getPrice();
                     }
-                    mBtnClearing.setText("结算（"+mTotalChecked+")");
-                    mTVTotal.setText("合计：￥"+mTotalMoney);
+                    mBtnClearing.setText("结算（" + mTotalChecked + ")");
+                    mTVTotal.setText("合计：￥" + mTotalMoney);
                 }
             });
 
             return convertView;
         }
 
-       @Override
-       public void setChecked(boolean checked) {
-           holder.cb.setChecked(checked);
-       }
-
-       class ViewHolder{
-             CheckBox cb ;
-             ImageView img;
-             TextView name,category,price,number;
+        class ViewHolder {
+            CheckBox cb;
+            ImageView img;
+            TextView name, category, price, number;
         }
     }
 
-    interface Callback{
-        void setChecked(boolean checked);
-    }
 }
