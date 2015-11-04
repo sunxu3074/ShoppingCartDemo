@@ -10,16 +10,16 @@
 
 ### 功能实现
 
--数据存储在手机数据库内
--UI用到了TabLayout,CardView
+- 数据存储在手机数据库内
+- UI用到了TabLayout,CardView
 
 ### TODO
 
--图片展示的滚动效果实现
--美化UI
--自定义ActionBar
+- 图片展示的滚动效果实现
+- 美化UI
+- 自定义ActionBar
 
 ### 用法
 
--直接导入project即可.
+- 直接导入project即可.
 
