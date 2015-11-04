@@ -36,14 +36,6 @@ public class BookFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_healthy, container, false);
     }
 
-    //    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//
-//        initViews();
-//        addListeners();
-//        initDatas();
-//    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -93,6 +85,7 @@ public class BookFragment extends Fragment {
 
     private void initViews() {
 
-        mListView = (ListView) getActivity().findViewById(R.id.fragment_healthy_lv);
+        mListView = (ListView) getView().findViewById(R.id.fragment_healthy_lv);
     }
+
 }

@@ -43,8 +43,6 @@ public class ShoppingCartActivity extends ActionBarActivity {
 
     private CheckBox mCheckBox;
 
-    private boolean isAllChecked;
-
     /**
      * 合计
      */
@@ -103,13 +101,6 @@ public class ShoppingCartActivity extends ActionBarActivity {
         mBtnClearing = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
         mTVTotal = (TextView) findViewById(R.id.tv_activity_shopping_cart_total);
         mCheckBox = (CheckBox) findViewById(R.id.cb_activity_shopping_cart);
-
-        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isAllChecked = isChecked;
-            }
-        });
 
     }
 

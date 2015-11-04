@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/img_activity_product"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="270dp"
         android:scaleType="fitXY"
         android:src="@drawable/healthy_3"
         />
@@ -33,51 +33,52 @@
                 android:id="@+id/tv_activity_product_details_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="11dp"
                 android:text="￥0"
-                android:textColor="#ff606461"
-                android:layout_marginBottom="2dp"/>
+                android:textColor="#ff606461"/>
 
             <TextView
                 android:id="@+id/tv_activity_product_details_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="11dp"
                 android:gravity="left|center_vertical"
+                android:paddingLeft="11dp"
                 android:text="￥0"
                 android:textColor="#ffea1a15"/>
         </LinearLayout>
 
         <TextView
-            android:padding="7dp"
             android:id="@+id/tv_activity_product_details_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
+            android:padding="7dp"
             android:paddingRight="11dp"
             android:text="已售出159件"
             android:textColor="#ff606461"/>
     </LinearLayout>
 
     <TextView
-        android:padding="7dp"
         android:id="@+id/tv_activity_product_details_details"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:ellipsize="end"
+        android:padding="7dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
+        android:gravity="center_vertical"
         android:minHeight="48dp"
-        android:gravity="center_vertical">
+        android:orientation="horizontal"
+        android:weightSum="3">
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -88,9 +89,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#ffea811a"
             android:gravity="center"
             android:text="加入购物车"
-            android:background="#ffea811a"
             android:textColor="#ffffffff"/>
 
         <Button
@@ -98,10 +99,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#ffea0c23"
             android:gravity="center"
             android:text="马上买"
-            android:textColor="#ffffffff"
-            android:background="#ffea0c23"/>
+            android:textColor="#ffffffff"/>
     </LinearLayout>
 
 

@@ -360,6 +360,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
             setWindowBehind(false);
             mPopupWindow.dismiss();
             isPopOpened = false;
+            return ;
         }
         super.onBackPressed();
     }
