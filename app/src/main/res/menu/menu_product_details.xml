@@ -10,5 +10,5 @@
             android:title="Shopping"
             android:orderInCategory="101"
             app:showAsAction="always"
-            android:icon="@drawable/shoppingcart"/>
+            android:icon="@drawable/detail_shopping_cart"/>
 </menu>
