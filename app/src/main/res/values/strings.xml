@@ -8,4 +8,6 @@
     <string name="title_activity_add_to_cart">AddToCartActivity</string>
     <string name="title_activity_shopping_cart">我的购物车</string>
     <string name="title_activity_base">BaseActivity</string>
+    <string name="action_shopping_cart">设置</string>
+    
 </resources>
