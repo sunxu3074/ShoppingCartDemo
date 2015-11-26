@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">ShoppoingDemo</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_category_details">CategoryDetailsActivity</string>
-    <string name="title_activity_product_details">ProductDetailsActivity</string>
+    <string name="main_page">健康产品</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_category_details">产品列表</string>
+    <string name="title_activity_product_details">产品详情</string>
     <string name="title_activity_add_to_cart">AddToCartActivity</string>
-    <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
+    <string name="title_activity_shopping_cart">我的购物车</string>
+    <string name="title_activity_base">BaseActivity</string>
 </resources>

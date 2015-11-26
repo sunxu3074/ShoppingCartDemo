@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,7 @@ import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
-public class ShoppingCartActivity extends ActionBarActivity {
+public class ShoppingCartActivity extends BaseActivity {
 
     private static final int MSG_WHAT = 0x223;
 

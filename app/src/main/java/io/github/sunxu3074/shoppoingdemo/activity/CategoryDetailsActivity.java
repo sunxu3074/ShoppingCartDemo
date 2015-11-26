@@ -6,7 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -20,7 +19,7 @@ import io.github.sunxu3074.shoppoingdemo.fragment.BookFragment;
 import io.github.sunxu3074.shoppoingdemo.fragment.FootWashFragment;
 import io.github.sunxu3074.shoppoingdemo.fragment.PillFragment;
 
-public class CategoryDetailsActivity extends ActionBarActivity {
+public class CategoryDetailsActivity extends BaseActivity {
 
 
 

@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +28,7 @@ import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReadDbHelper;
 import io.github.sunxu3074.shoppoingdemo.db.ProductReaderContract;
 
-public class ProductDetailsActivity extends ActionBarActivity {
+public class ProductDetailsActivity extends BaseActivity {
 
     private static final int QUERY_YES = 0x100;
     private static final int QUERY_NO = 0x101;
@@ -90,6 +92,12 @@ public class ProductDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#33000000")));
+        //google的actionbar是分为上下两栏显示的，上面的代码只能设置顶部actionbar的背景色，
+        //为了让下面的背景色一致，还需要添加一行代码：
+        actionBar.setSplitBackgroundDrawable(new ColorDrawable(Color.parseColor("#33000000")));
 
         initViews();
         initDatas();
@@ -166,15 +174,15 @@ public class ProductDetailsActivity extends ActionBarActivity {
     private void insert2Sqlite() {
 
         // 购买数量 number
-       // 购买种类
+        // 购买种类
         int price = entity.getPrice();   // 购买价格
         String id = entity.getId(); // 购买id
         String category = "保健产品";
-        if(Integer.parseInt(id)>30000) {
+        if (Integer.parseInt(id) > 30000) {
             category = "书籍";
-        }else if (Integer.parseInt(id)>20000) {
+        } else if (Integer.parseInt(id) > 20000) {
             category = "丸剂";
-        }else {
+        } else {
             category = "保健产品";
         }
         String name = entity.getName();  // 购买名称
@@ -316,11 +324,11 @@ public class ProductDetailsActivity extends ActionBarActivity {
         mTVPopDetails.setText(entity.getDetails());
         mTVList.setText("￥" + (entity.getPrice() + 900));
         mImgIcon.setImageResource(entity.getImgUrl());
-        if(Integer.parseInt(entity.getId())/10000==1){
+        if (Integer.parseInt(entity.getId()) / 10000 == 1) {
             category = "保健产品";
-        }else if(Integer.parseInt(entity.getId())/10000==2){
+        } else if (Integer.parseInt(entity.getId()) / 10000 == 2) {
             category = "丸剂";
-        }else {
+        } else {
             category = "书籍";
         }
         mTVPopCategory.setText(category);
@@ -360,7 +368,7 @@ public class ProductDetailsActivity extends ActionBarActivity {
             setWindowBehind(false);
             mPopupWindow.dismiss();
             isPopOpened = false;
-            return ;
+            return;
         }
         super.onBackPressed();
     }

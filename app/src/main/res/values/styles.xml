@@ -26,8 +26,26 @@
     <style name="CustomActionBarTheme"
            parent="AppTheme">
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
 
         <!-- 兼容支持库 -->
         <item name="windowActionBarOverlay">true</item>
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="android:backgroundSplit">@color/actionbar_background</item>
+        <item name="android:backgroundStacked">#346c36</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+
+        <item name="background">@color/actionbar_background</item>
+        <item name="backgroundSplit">@color/actionbar_background</item>
+        <item name="backgroundStacked">#346c36</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#e4282828</item>
     </style>
 </resources>

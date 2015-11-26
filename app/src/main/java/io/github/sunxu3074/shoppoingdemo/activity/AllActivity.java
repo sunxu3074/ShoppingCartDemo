@@ -2,7 +2,6 @@ package io.github.sunxu3074.shoppoingdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +16,7 @@ import io.github.sunxu3074.shoppoingdemo.R;
 import io.github.sunxu3074.shoppoingdemo.adapter.CategoryAdapter;
 import io.github.sunxu3074.shoppoingdemo.consts.ConstUtils;
 
-public class AllActivity extends ActionBarActivity {
+public class AllActivity extends BaseActivity {
 
     private ListView mListView;
     private List<CategoryEntity> mDatas = new ArrayList<>();
