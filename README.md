@@ -1,12 +1,9 @@
 # ShoppingDemo
 简单实现类似于淘宝的购物车功能
 
-### 效果展示
-![截图1](http://7xno72.com1.z0.glb.clouddn.com/sunxu_Screenshot_2015-11-04-14-05-02-798_ShoppoingDemo.png)
+### 效果图
 
-![截图2](http://7xno72.com1.z0.glb.clouddn.com/sunxu_Screenshot_2015-11-04-14-06-18-806_ShoppoingDemo.png)
-
-![截图3](http://7xno72.com1.z0.glb.clouddn.com/sunxu_Screenshot_2015-11-04-14-06-44-463_ShoppoingDemo.png)
+<img src="preview.gif">
 
 ### 功能实现
 
